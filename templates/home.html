@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>AnnSetu — Smart Food Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* THEME COLORS */
+    :root {
+      --bg: #f0fbff;
+      --card: #ffffff;
+      --accent1: #0ea5a0;
+      --accent2: #0b7285;
+      --text: #012d3a;
+      --muted: #506870;
+      --glass: rgba(255,255,255,0.7);
+    }
+    .nav-links a.active {
+      color: var(--accent1);
+      border-bottom: 2px solid var(--accent1);
+   }
+
+    [data-theme="dark"] {
+      --bg: #071823;
+      --card: #05202a;
+      --accent1: #0fbf9b;
+      --accent2: #0b7285;
+      --text: #e6f7f5;
+      --muted: #93b4b2;
+      --glass: rgba(10,20,25,0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: linear-gradient(180deg, var(--bg) 0%, #e6fbfb 100%);
+      color: var(--text);
+      transition: background .3s, color .3s;
+      min-height: 100vh;
+    }
+
+    /* NAVIGATION BAR */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.8), rgba(255,255,255,0.5));
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      height: 44px;
+      width: 44px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 16px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent1);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    /* THEME TOGGLE SWITCH */
+    .toggle {
+      width: 40px;
+      height: 20px;
+      border-radius: 20px;
+      background: var(--accent2);
+      position: relative;
+      cursor: pointer;
+    }
+
+    .knob {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+      transition: all 0.3s ease;
+    }
+
+    .knob.right {
+      left: 22px;
+    }
+
+    /* HERO SECTION */
+    .hero {
+      background: url("C:/Users/HP/Desktop/food_wastage_tracking_project/static/images/hero.jpeg") center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 180px 20px 100px;
+      position: relative;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .hero h2 {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      opacity: 0.95;
+      margin-bottom: 30px;
+    }
+
+    .cta {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      border: 2px solid white;
+      background: transparent;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .btn:hover {
+      background: white;
+      color: var(--accent2);
+    }
+
+    /* ABOUT SECTION */
+    .about {
+      padding: 60px 20px;
+      text-align: center;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .about img {
+      width: 70%;
+      border-radius: 14px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      margin-top: 20px;
+    }
+
+    .about p {
+      margin-top: 20px;
+      font-size: 17px;
+      color: var(--muted);
+    }
+
+    /* SERVICES SECTION */
+    .services {
+      padding: 60px 20px;
+      background: #f5f9ff;
+      text-align: center;
+    }
+
+    .services h3 {
+      font-size: 30px;
+      margin-bottom: 30px;
+    }
+
+    .service-grid {
+      display: grid;
+      gap: 25px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .service-card {
+      background: var(--card);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+      transition: transform 0.3s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .service-card img {
+      width: 70px;
+      margin-bottom: 15px;
+    }
+
+    .service-card h4 {
+      color: var(--accent2);
+      margin-bottom: 8px;
+    }
+
+    /* HOW IT WORKS SECTION */
+    .service-container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .card {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      width: 280px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: 0.3s;
+      text-align: center;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card h3 {
+      color: #003366;
+      margin: 15px 0 10px;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 25px;
+      margin-top: 40px;
+      font-size: 14px;
+      background: #f0f6fa;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAVIGATION -->
+  <div class="nav">
+    <div class="brand">
+      <div class="logo">
+        <img src="C:/Users/HP/OneDrive/Pictures/Screenshots/Screenshot 2025-11-10 124114.png" alt="AnnSetu Logo" style="width:44px;height:44px;border-radius:10px;object-fit:cover;">
+      </div>
+      <div>
+        <h1 style="font-size:18px;margin:0">AnnSetu</h1>
+        <div style="font-size:12px; color:var(--muted)">Smart Food Wastage Tracker</div>
+      </div>
+    </div>
+
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="/dashboard" id="dashboardLink">Dashboard</a>
+      <a href="#services">Services</a>
+    </div>
+
+    <div class="nav-actions">
+      <div class="bell" id="bell">🔔</div>
+      <div class="toggle" id="themeToggle"><div class="knob left" id="knob"></div></div>
+    </div>
+  </div>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-content">
+      <h2><marquee>Predict • Prevent • Preserve</marquee></h2>
+      <p>Reducing food wastage through AI-powered insights and connecting those who have with those who need.</p>
+      <div class="cta">
+        <button class="btn" onclick="location.href='/org'">Join as Organization</button>
+        <button class="btn" onclick="location.href='/ngo'">Join as NGO</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section id="about" class="about">
+    <h2>About Us</h2>
+    <img src="C:/Users/HP/OneDrive/Pictures/Screenshots/Screenshot 2025-11-08 192631.png" alt="About AnnSetu">
+    <p>We are students building an intelligent food management system to support zero hunger goals. AnnSetu bridges the gap between food surplus and scarcity through machine learning insights.</p>
+  </section>
+
+  <!-- SERVICES SECTION -->
+  <section id="services" class="services">
+    <h2>Our Services</h2>
+    <div class="service-grid">
+      <div class="service-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" alt="">
+        <h4>Food Tracking</h4>
+        <p>Track surplus food and wastage levels in real time with a single dashboard.</p>
+      </div>
+      <div class="service-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/3208/3208707.png" alt="">
+        <h4>AI Predictions</h4>
+        <p>Our ML model forecasts demand to help reduce overproduction and shortages.</p>
+      </div>
+      <div class="service-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/1077/1077035.png" alt="">
+        <h4>NGO Matching</h4>
+        <p>Instantly connect restaurants and NGOs to distribute food efficiently.</p>
+      </div>
+      <div class="service-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/942/942748.png" alt="">
+        <h4>Analytics Dashboard</h4>
+        <p>Visualize wastage reduction, donations, and impact over time.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="services" id="how">
+    <h2>How It Works</h2>
+    <div class="service-container">
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/3081/3081559.png" width="70" alt="">
+        <h3>1️⃣ Post Food</h3>
+        <p>Restaurants share details of surplus food available.</p>
+      </div>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/1077/1077035.png" width="70" alt="">
+        <h3>2️⃣ Match</h3>
+        <p>System finds nearby NGOs based on food type & distance.</p>
+      </div>
+      <div class="card">
+        <img src="https://cdn-icons-png.flaticon.com/512/1048/1048945.png" width="70" alt="">
+        <h3>3️⃣ Deliver</h3>
+        <p>NGOs collect food and distribute it to the needy.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>© 2026 AnnSetu • Built by Students • Towards Zero Hunger 🌍</footer>
+
+  <script>
+    window.onload = function() {
+      // THEME TOGGLE
+      const knob = document.getElementById('knob');
+      const themeToggle = document.getElementById('themeToggle');
+      let dark = false;
+      themeToggle.onclick = () => {
+        dark = !dark;
+        document.documentElement.toggleAttribute('data-theme', dark);
+        knob.classList.toggle('right', dark);
+        knob.classList.toggle('left', !dark);
+      };
+
+      // DASHBOARD LOGIN CHECK
+     const dashboardLink = document.getElementById('dashboardLink');
+
+dashboardLink.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  alert("⚠ Please login first to access the dashboard!");
+  window.location.href = "/login";
+});
+    };
+  </script>
+<script>
+const links = document.querySelectorAll(".nav-links a");
+
+links.forEach(link => {
+  link.addEventListener("click", function () {
+    links.forEach(l => l.classList.remove("active"));
+    this.classList.add("active");
+  });
+});
+</script>
+</body>
+</html>

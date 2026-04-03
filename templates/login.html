@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Login</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: linear-gradient(180deg, #f0fbff 0%, #e6fbfb 100%);
+  color: #000;
+  transition: background .3s, color .3s;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+form {
+  background: white;
+  padding: 30px;
+  margin: 40px auto;
+  max-width: 400px;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+form h3 {
+  text-align: center;
+  color: #006241;
+  margin-bottom: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.btn {
+  width: 100%;
+  background-color: #006241;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn:hover {
+  background-color: #004b32;
+}
+
+.captcha-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+.captcha-box input {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+}
+
+.captcha-text {
+  font-size: 14px;
+  color: #333;
+}
+
+.captcha-logo {
+  margin-left: auto;
+  width: 80px;
+  opacity: 0.6;
+}
+
+p {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+a {
+  color: #006241;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.popup {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-content {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  text-align: center;
+  width: 300px;
+  position: relative;
+}
+
+.popup-content h4 {
+  margin-bottom: 20px;
+  color: #006241;
+}
+
+.popup-content button {
+  display: block;
+  width: 100%;
+  background-color: #006241;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.popup-content button:hover {
+  background-color: #004b32;
+}
+
+.success-msg {
+  text-align: center;
+  color: #008000;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.flash {
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.flash.success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.flash.error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+</style>
+</head>
+<body>
+
+<form action="/login" method="POST">
+  <h3>Login to Annsetu</h3>
+ {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% set category, message = messages[-1] %}
+    <p style="text-align:center; font-weight:500;
+       color: {{ 'green' if category == 'success' else 'red' }};">
+      {{ message }}
+    </p>
+  {% endif %}
+{% endwith %}
+
+ 
+
+  <input type="email" name="email" placeholder="Email" required>
+  <input type="password" name="password" placeholder="Password" required>
+
+  <div class="captcha-box">
+    <input type="checkbox" required>
+    <span class="captcha-text">I'm not a robot</span>
+    <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" alt="captcha" class="captcha-logo">
+  </div>
+
+  <button type="submit" class="btn">Login</button>
+  <p>Don’t have an account? <a href="/register">Register here</a></p>
+</form>
+
+<!-- Popup for registration options -->
+<div class="popup" id="popup">
+  <div class="popup-content">
+    
+    <h4>Register As</h4>
+    <button onclick="location.href='Org.htm'">Organization</button>
+    <button onclick="location.href='ngo1.htm'">NGO</button>
+  </div>
+</div>
+
+
+
+</body>
+</html>

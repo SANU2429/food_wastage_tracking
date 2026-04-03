@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>AnnaSetu — Dashboard</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #f0fbff;
+      --card: #fff;
+      --accent1: #0ea5a0; 
+      --accent2: #0b7285; 
+      --text: #012d3a; 
+      --muted: #506870;
+    }
+
+    [data-theme="dark"] {
+      --bg: #071823; 
+      --card: #05202a; 
+      --accent1: #0fbf9b;  
+      --accent2: #0b7285; 
+      --text: #e6f7f5; 
+      --muted: #93b4b2;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      background: linear-gradient(180deg, var(--bg), #e6fbfb);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.8), rgba(255,255,255,0.6));
+      position: sticky;
+      top: 0;
+      z-index: 80;
+      backdrop-filter: blur(8px);
+    }
+
+    .logo {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .logo .ic {
+      height: 40px;
+      width: 40px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      padding: 14px;
+      justify-content: center;
+      background: transparent;
+    }
+
+    .tab {
+      padding: 8px 14px;
+      border-radius: 10px;
+      background: var(--card);
+      cursor: pointer;
+      border: 1px solid rgba(0,0,0,0.06);
+      transition: all 0.25s ease;
+      font-weight: 500;
+}
+    .tab:hover {
+       transform: translateY(-2px);
+       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+    .tab.active {
+      background: linear-gradient(90deg, var(--accent1), var(--accent2));
+      color: white;
+      border: none;
+      box-shadow: 0 6px 20px rgba(14,165,160,0.3);
+      transform: translateY(-3px);
+}
+
+    .container {
+      max-width: 1150px;
+      margin: 20px auto;
+      padding: 18px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 6px 18px rgba(2,18,22,0.03);
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 16px;
+      color: var(--accent2);
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    table th, table td {
+      padding: 10px;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      text-align: left;
+    }
+
+    .btn {
+      background: linear-gradient(90deg, var(--accent1), var(--accent2));
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-weight: 500;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(14, 165, 160, 0.3);
+    }
+
+    .btn.ghost {
+      background: transparent;
+      border: 1px solid rgba(0,0,0,0.1);
+      color: var(--text);
+    }
+
+    .form-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .form-row input, .form-row select {
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #dceff0;
+      min-width: 120px;
+    }
+
+    .toast-fixed {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 9999;
+    }
+
+    @media (max-width:720px) {
+      .tabs { overflow: auto; padding: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav" id="nav">
+    <div class="logo">
+      <div class="ic">AS</div>
+      <div>
+        <div style="font-weight:700">Annsetu</div>
+        <div style="font-size:12px;color:var(--muted)">Dashboard</div>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:12px">
+    <button class="btn" onclick="location.href='/logout'">Logout</button>
+      <div id="notifWrap" style="position:relative">
+        <div id="bellMini" style="background:var(--card);padding:8px;border-radius:10px;cursor:pointer;display:flex;align-items:center;gap:8px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 17H9a3 3 0 006 0z" stroke="#006241" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 8a6 6 0 00-12 0c0 7-3 7-3 7h18s-3 0-3-7" stroke="#006241" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div id="miniCount" style="background:#ff4d6d;color:white;border-radius:12px;padding:2px 6px;font-weight:700;display:none">0</div>
+        </div>
+        <div id="miniDropdown" style="position:absolute;right:0;top:44px;display:none;width:320px"></div>
+      </div>
+      <div id="themeMini" style="padding:6px;border-radius:8px;background:var(--card);cursor:pointer">Toggle</div>
+    </div>
+  </div>
+
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-tab="restaurant">Restaurant</div>
+    <div class="tab" data-tab="ngo">NGO</div>
+    <div class="tab" data-tab="analytics">Analytics</div>
+    <div class="tab" data-tab="admin">Admin</div>
+      </div>
+
+  <div class="container">
+    <!-- Restaurant tab content -->
+    <div id="restaurant" class="tab-pane">
+      <div class="grid">
+        <div class="card">
+          <h3>Add Leftover Food</h3>
+          <p class="muted">Post surplus quickly so NGOs get notified.</p>
+          <div style="margin-top:12px" class="form-row">
+            <input id="r_food" placeholder="Food name">
+            <input id="r_qty" placeholder="Quantity (kg)">
+            <input id="r_expiry" type="date">
+            <input id="r_contact" placeholder="Contact Name"> 
+            <input id="r_phone" placeholder="Contact Number">             
+            <select id="r_unit"><option>kg</option><option>meals</option></select>
+          </div>
+          <div style="margin-top:12px;display:flex;gap:8px">
+            <button class="btn" onclick="postFood()">Post Food</button>
+            <button class="btn ghost" onclick="document.querySelectorAll('#r_food,#r_qty,#r_expiry,#r_contact,#r_phone').forEach(i=>i.value='')">Reset</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Your Active Posts</h3>
+          <p class="muted">Pending posts will appear here until accepted by NGO.</p>
+          <table id="postsTable">
+            <thead><tr><th>Food</th><th>Qty</th><th>Expiry</th><th>Status</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- NGO tab content -->
+    <div id="ngo" class="tab-pane" style="display:none">
+      <div class="grid">
+        <div class="card">
+          <h3>Available Food</h3>
+          <p class="muted">Accept a post to pick up.</p>
+          <table id="availableTable">
+            <thead><tr><th>Food</th><th>Qty</th><th>Expiry</th><th>Contact</th><th>Phone</th><th>Action</th></tr></thead> 
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <h3>Requests</h3>
+          <p class="muted">Requests you made to restaurants</p>
+          <table id="requestsTable"><thead><tr><th>Food</th><th>Status</th></tr></thead><tbody></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Analytics tab -->
+    <div id="analytics" class="tab-pane" style="display:none">
+      <div class="grid">
+        <div class="card">
+          <h3>Key Metrics</h3>
+          <p class="muted">Totals (demo data)</p>
+          <div style="display:flex;gap:12px;margin-top:12px;flex-wrap:wrap">
+            <div style="background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;padding:12px 16px;border-radius:10px;min-width:120px">
+              <div style="font-size:20px;font-weight:700" id="metric_saved">0 kg</div>
+              <div class="small muted">Total Food Saved</div>
+            </div>
+            <div style="background:#fff;padding:12px;border-radius:10px;min-width:120px">
+              <div style="font-size:20px;font-weight:700" id="metric_meals">0</div>
+              <div class="small muted">Meals Served</div>
+            </div>
+            <div style="background:#fff;padding:12px;border-radius:10px;min-width:120px">
+              <div style="font-size:20px;font-weight:700" id="metric_ngos">0</div>
+              <div class="small muted">NGOs Joined</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Wastage Trend (Monthly)</h3>
+          <canvas id="chartWastage" height="160"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Admin tab -->
+    <div id="admin" class="tab-pane" style="display:none">
+      <div class="grid">
+        <div class="card">
+          <h3>Pending Registrations</h3>
+          <div class="muted">Approve or reject new orgs (demo)</div>
+          <table id="regTable"><thead><tr><th>Name</th><th>Type</th><th>Action</th></tr></thead><tbody>
+            <tr><td>Sample Cafe</td><td>Restaurant</td><td><button onclick="addNotification('Registration approved: Sample Cafe')" class="btn">Approve</button></td></tr>
+          </tbody></table>
+        </div>
+
+        <div class="card">
+          <h3>Manage Posts</h3>
+          <div class="muted">Remove expired posts or review reports</div>
+          <button class="btn" onclick="clearExpired()">Remove Expired (demo)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-fixed" id="toasts"></div>
+
+<script>
+function postFood(){
+  const formData = new FormData();
+  formData.append("food", document.getElementById('r_food').value);
+  formData.append("qty", document.getElementById('r_qty').value);
+  formData.append("expiry", document.getElementById('r_expiry').value);
+  formData.append("contact", document.getElementById('r_contact').value);
+  formData.append("phone", document.getElementById('r_phone').value);
+
+  fetch('/add_food',{
+    method:'POST',
+    body:formData
+  }).then(()=>{
+    alert("Food Added");
+    loadData();
+  });
+}
+
+function loadData(){
+  fetch('/get_food')
+  .then(res => res.json())
+  .then(data => {
+
+    const postsTable = document.querySelector('#postsTable tbody');
+    const availTable = document.querySelector('#availableTable tbody');
+
+    postsTable.innerHTML = "";
+    availTable.innerHTML = "";
+
+    data.forEach(p => {
+
+      // Restaurant Table
+      postsTable.innerHTML += `
+      <tr>
+        <td>${p.food}</td>
+        <td>${p.qty}</td>
+        <td>${p.expiry}</td>
+        <td>${p.status}</td>
+      </tr>`;
+
+      // NGO Table (Available Food)
+      availTable.innerHTML += `
+      <tr>
+        <td>${p.food}</td>
+        <td>${p.qty}</td>
+        <td>${p.expiry}</td>
+        <td>${p.contact}</td>
+        <td>${p.phone}</td>
+        <td>
+          <button class="btn" onclick="acceptFood(${p.id})">
+            Accept
+          </button>
+        </td>
+      </tr>`;
+    });
+  });
+}
+function acceptFood(id){
+  fetch(`/accept_food/${id}`)
+  .then(()=>{
+    alert("Food Accepted");
+    loadData();
+  });
+}
+
+window.onload = loadData;
+window.onload = function() {
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+
+      const id = this.getAttribute('data-tab');
+
+      document.querySelectorAll('.tab-pane').forEach(p => p.style.display = 'none');
+
+      document.getElementById(id).style.display = 'block';
+    });
+  });
+};
+</script>
+</body>
+</html>
+

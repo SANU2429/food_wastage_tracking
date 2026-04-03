@@ -1,0 +1,128 @@
+<!-- Organization Registration -->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Organization Registration</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: linear-gradient(180deg, #f0fbff 0%, #e6fbfb 100%);
+  color: #000;
+  transition: background .3s, color .3s;
+  min-height: 100vh;
+}
+
+.btn-group button {
+  background-color: #006241;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin: 10px;
+  transition: 0.3s;
+  font-size: 16px;
+}
+
+.btn-group button:hover {
+  background-color: #004b32;
+}
+
+form {
+  background: white;
+  padding: 30px;
+  margin: 40px auto;
+  max-width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+form h3 {
+  text-align: center;
+  color: #006241;
+  margin-bottom: 20px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.btn {
+  width: 100%;
+  background-color: #006241;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #004b32;
+}
+
+/* Captcha Box */
+.captcha-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+.captcha-box input {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+}
+
+.captcha-text {
+  font-size: 14px;
+  color: #333;
+}
+
+.captcha-logo {
+  margin-left: auto;
+  width: 80px;
+  opacity: 0.6;
+}
+</style>
+</head>
+<body>
+
+<form action="/register_org" method="POST">  
+  <h3>Join as Organization</h3>
+  <input type="text" name="orgName" placeholder="Organization Name" required>
+  <input type="text" name="contactPerson" placeholder="Contact Person" required>
+  <input type="number" name="phone" placeholder="Phone Number" required>
+  <input type="email" name="email" placeholder="Email" required>
+  <input type="text" name="address" placeholder="Address" required>
+  <input type="password" name="password" placeholder="Password" required>
+
+  <div class="captcha-box">
+    <input type="checkbox" required>
+    <span class="captcha-text">I'm not a robot</span>
+    <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" alt="captcha" class="captcha-logo">
+  </div>
+
+  <button type="submit" class="btn">Register</button>
+</form>
+
+
+</body>
+</html>

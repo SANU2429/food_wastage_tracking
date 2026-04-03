@@ -1,0 +1,2 @@
+# food_wastage_tracking
+Final year project food_wastage_tracking_and_demand_forecasting

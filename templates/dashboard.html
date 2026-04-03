@@ -9,46 +9,61 @@
 
   <style>
     :root {
-      --bg: #f0fbff;
-      --card: #fff;
-      --accent1: #0ea5a0; 
-      --accent2: #0b7285; 
-      --text: #012d3a; 
-      --muted: #506870;
-    }
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --accent1: #fc8019; /* Swiggy orange */
+  --accent2: #ff4d4f; /* Zomato red */
+  --text: #1f2937;
+  --muted: #6b7280;
+}
 
     [data-theme="dark"] {
-      --bg: #071823; 
-      --card: #05202a; 
-      --accent1: #0fbf9b;  
-      --accent2: #0b7285; 
-      --text: #e6f7f5; 
-      --muted: #93b4b2;
-    }
+  --bg: #0f172a;
+  --card: #1e293b;
+  --accent1: #fb923c;
+  --accent2: #f87171;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+}
 
+  
     * {
       box-sizing: border-box;
     }
 
     body {
-      font-family: "Poppins", sans-serif;
-      margin: 0;
-      background: linear-gradient(180deg, var(--bg), #e6fbfb);
-      color: var(--text);
-      min-height: 100vh;
-    }
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+
+  background: 
+    linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+    url('https://images.unsplash.com/photo-1504674900247-0877df9cc836');
+
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+
+}
+
+.main {
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
     .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 20px;
-      background: linear-gradient(90deg, rgba(255,255,255,0.8), rgba(255,255,255,0.6));
-      position: sticky;
-      top: 0;
-      z-index: 80;
-      backdrop-filter: blur(8px);
-    }
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 15px;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
 
     .logo {
       display: flex;
@@ -82,21 +97,14 @@
       background: var(--card);
       cursor: pointer;
       border: 1px solid rgba(0,0,0,0.06);
-      transition: all 0.25s ease;
-      font-weight: 500;
-}
-    .tab:hover {
-       transform: translateY(-2px);
-       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
+      transition: all 0.2s ease;
+    }
 
     .tab.active {
-      background: linear-gradient(90deg, var(--accent1), var(--accent2));
-      color: white;
-      border: none;
-      box-shadow: 0 6px 20px rgba(14,165,160,0.3);
-      transform: translateY(-3px);
-}
+      box-shadow: 0 8px 30px rgba(6,45,48,0.06);
+      transform: translateY(-4px);
+      border-color: transparent;
+    }
 
     .container {
       max-width: 1150px;
@@ -111,11 +119,41 @@
     }
 
     .card {
-      background: var(--card);
-      border-radius: 12px;
-      padding: 16px;
-      box-shadow: 0 6px 18px rgba(2,18,22,0.03);
-    }
+  background: white;
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+  border: none;
+}
+
+.card {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: cardFade 0.5s ease forwards;
+}
+
+.card:nth-child(1) { animation-delay: 0.1s; }
+.card:nth-child(2) { animation-delay: 0.2s; }
+.card:nth-child(3) { animation-delay: 0.3s; }
+.card:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes cardFade {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card div[style*="linear-gradient"] {
+  box-shadow: 0 10px 25px rgba(14,165,160,0.4);
+}
+
+
+
+.card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+}
 
     .card h3 {
       margin: 0;
@@ -134,6 +172,11 @@
       margin-top: 10px;
     }
 
+    table tr:hover {
+  background: rgba(14,165,160,0.05);
+  transition: 0.2s;
+}
+
     table th, table td {
       padding: 10px;
       border-bottom: 1px solid rgba(0,0,0,0.06);
@@ -141,27 +184,58 @@
     }
 
     .btn {
-      background: linear-gradient(90deg, var(--accent1), var(--accent2));
-      color: white;
-      border: none;
-      padding: 8px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      font-weight: 500;
-    }
+  transition: all 0.2s ease;
+}
 
-    .btn:hover {
-      opacity: 0.9;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(14, 165, 160, 0.3);
-    }
+.btn:active {
+  transform: scale(0.95);
+}
 
+    .btn {
+  background: linear-gradient(90deg, var(--accent1), var(--accent2));
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+  transition: 0.5s;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+    
     .btn.ghost {
       background: transparent;
       border: 1px solid rgba(0,0,0,0.1);
       color: var(--text);
     }
+
+    .search-bar {
+  padding: 10px 16px;
+  border-radius: 20px;
+  border: none;
+  width: 300px;
+  background: #f1f5f3;
+}
 
     .form-row {
       display: flex;
@@ -176,12 +250,24 @@
       min-width: 120px;
     }
 
-    .toast-fixed {
-      position: fixed;
-      right: 18px;
-      bottom: 18px;
-      z-index: 9999;
-    }
+    
+
+    .toast-fixed .card {
+  animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+
 
     @media (max-width:720px) {
       .tabs { overflow: auto; padding: 8px; }
@@ -199,8 +285,22 @@
       </div>
     </div>
 
+    <input placeholder="Search food, NGO..." class="search-bar">
+
+    <div style="display:flex;align-items:center;gap:8px">
+  <img src="https://i.pravatar.cc/40" style="border-radius:50%">
+  <div>
+    <div style="font-size:13px;font-weight:600">Restaurant Admin</div>
+    <div style="font-size:11px;color:var(--muted)">Online</div>
+  </div>
+</div>
+
+<div class="card">
+  <h3>Live Activity</h3>
+  <div id="activityFeed"></div>
+</div>
+
     <div style="display:flex;align-items:center;gap:12px">
-    <button class="btn" onclick="location.href='/logout'">Logout</button>
       <div id="notifWrap" style="position:relative">
         <div id="bellMini" style="background:var(--card);padding:8px;border-radius:10px;cursor:pointer;display:flex;align-items:center;gap:8px">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 17H9a3 3 0 006 0z" stroke="#006241" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 8a6 6 0 00-12 0c0 7-3 7-3 7h18s-3 0-3-7" stroke="#006241" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -217,7 +317,7 @@
     <div class="tab" data-tab="ngo">NGO</div>
     <div class="tab" data-tab="analytics">Analytics</div>
     <div class="tab" data-tab="admin">Admin</div>
-      </div>
+  </div>
 
   <div class="container">
     <!-- Restaurant tab content -->
@@ -239,6 +339,23 @@
             <button class="btn ghost" onclick="document.querySelectorAll('#r_food,#r_qty,#r_expiry,#r_contact,#r_phone').forEach(i=>i.value='')">Reset</button>
           </div>
         </div>
+
+        <div class="grid">
+  <div class="card">
+    <h3>Total Food Saved</h3>
+    <div style="font-size:28px;font-weight:700" id="metric_saved">0 kg</div>
+  </div>
+
+  <div class="card">
+    <h3>Meals Served</h3>
+    <div style="font-size:28px;font-weight:700" id="metric_meals">0</div>
+  </div>
+
+  <div class="card">
+    <h3>NGOs Active</h3>
+    <div style="font-size:28px;font-weight:700" id="metric_ngos">0</div>
+  </div>
+</div>
 
         <div class="card">
           <h3>Your Active Posts</h3>
@@ -323,86 +440,89 @@
   <div class="toast-fixed" id="toasts"></div>
 
 <script>
-function postFood(){
-  const formData = new FormData();
-  formData.append("food", document.getElementById('r_food').value);
-  formData.append("qty", document.getElementById('r_qty').value);
-  formData.append("expiry", document.getElementById('r_expiry').value);
-  formData.append("contact", document.getElementById('r_contact').value);
-  formData.append("phone", document.getElementById('r_phone').value);
+  let dark = false;
+  document.getElementById('themeMini').addEventListener('click', ()=>{dark=!dark;document.documentElement.setAttribute('data-theme', dark?'dark':'')});
+  document.querySelectorAll('.tab').forEach(tab=>tab.addEventListener('click',(e)=>{document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));e.currentTarget.classList.add('active');const id=e.currentTarget.getAttribute('data-tab');document.querySelectorAll('.tab-pane').forEach(p=>p.style.display='none');document.getElementById(id).style.display='block';}));
 
-  fetch('/add_food',{
-    method:'POST',
-    body:formData
-  }).then(()=>{
-    alert("Food Added");
-    loadData();
-  });
-}
+  const posts=[],requests=[];
+  const postsTableBody=document.querySelector('#postsTable tbody');
+  const availTableBody=document.querySelector('#availableTable tbody');
+  const reqTableBody=document.querySelector('#requestsTable tbody');
+  const toasts=document.getElementById('toasts');
 
-function loadData(){
-  fetch('/get_food')
-  .then(res => res.json())
-  .then(data => {
+  function addNotification(msg){
+    const miniDropdown=document.getElementById('miniDropdown');const miniCount=document.getElementById('miniCount');
+    let count=Number(miniCount.textContent||0)+1;miniCount.style.display='inline-block';miniCount.textContent=count;
+    const node=document.createElement('div');node.className='card';node.style.marginBottom='8px';node.innerHTML=<div style="font-weight:600">${msg}</div><div style="font-size:12px;color:var(--muted);margin-top:6px">${new Date().toLocaleString()}</div>;miniDropdown.prepend(node);
+    const t=document.createElement('div');t.className='card';t.style.marginTop='8px';t.innerHTML=<div style="font-weight:700">Notification</div><div style="margin-top:6px">${msg}</div>;toasts.appendChild(t);
+    setTimeout(()=>{t.style.opacity=0;t.style.transform='translateX(12px)';setTimeout(()=>t.remove(),500)},4000);
+  }
 
-    const postsTable = document.querySelector('#postsTable tbody');
-    const availTable = document.querySelector('#availableTable tbody');
+  document.getElementById('bellMini').addEventListener('click',(e)=>{e.stopPropagation();const dd=document.getElementById('miniDropdown');dd.style.display=dd.style.display==='block'?'none':'block';});
+  document.addEventListener('click',(e)=>{if(!e.target.closest('#notifWrap'))document.getElementById('miniDropdown').style.display='none'});
 
-    postsTable.innerHTML = "";
-    availTable.innerHTML = "";
+  function postFood(){
+    const f=document.getElementById('r_food').value.trim();
+    const q=document.getElementById('r_qty').value.trim();
+    const e=document.getElementById('r_expiry').value;
+    const c=document.getElementById('r_contact').value.trim(); 
+    const p=document.getElementById('r_phone').value.trim();   
+    if(!f||!q||!c||!p){alert('Please enter food, quantity, contact name & number');return;}
+    const id=Date.now().toString(36);
+    posts.unshift({id,food:f,qty:q,expiry:e||'—',contact:c,phone:p,status:'available'}); 
+    renderPosts();
+    addNotification(New food posted: ${f} (${q}) by ${c});
+    document.querySelectorAll('#r_food,#r_qty,#r_expiry,#r_contact,#r_phone').forEach(i=>i.value='');
+  }
 
-    data.forEach(p => {
+  function renderPosts(){
+    postsTableBody.innerHTML='';availTableBody.innerHTML='';
+    posts.forEach(p=>{
+      const tr=document.createElement('tr');
+      tr.innerHTML=<td>${p.food}</td><td>${p.qty}</td><td>${p.expiry}</td><td><span style="color:green">${p.status}</span></td>;
+      postsTableBody.appendChild(tr);
 
-      // Restaurant Table
-      postsTable.innerHTML += `
-      <tr>
-        <td>${p.food}</td>
-        <td>${p.qty}</td>
-        <td>${p.expiry}</td>
-        <td>${p.status}</td>
-      </tr>`;
-
-      // NGO Table (Available Food)
-      availTable.innerHTML += `
-      <tr>
-        <td>${p.food}</td>
-        <td>${p.qty}</td>
-        <td>${p.expiry}</td>
-        <td>${p.contact}</td>
-        <td>${p.phone}</td>
-        <td>
-          <button class="btn" onclick="acceptFood(${p.id})">
-            Accept
-          </button>
-        </td>
-      </tr>`;
+      const tr2=document.createElement('tr');
+      tr2.innerHTML=<td>${p.food}</td><td>${p.qty}</td><td>${p.expiry}</td><td>${p.contact}</td><td>${p.phone}</td><td><button class="btn" onclick="acceptPost('${p.id}')">Accept</button></td>; 
+      availTableBody.appendChild(tr2);
     });
-  });
-}
-function acceptFood(id){
-  fetch(`/accept_food/${id}`)
-  .then(()=>{
-    alert("Food Accepted");
-    loadData();
-  });
-}
+    document.getElementById('metric_saved').textContent=posts.reduce((s,i)=>s+Number(i.qty||0),0)+' kg';
+    document.getElementById('metric_meals').textContent=Math.round(posts.reduce((s,i)=>s+Number(i.qty||0),0)*2);
+    document.getElementById('metric_ngos').textContent=12;
+  }
 
-window.onload = loadData;
-window.onload = function() {
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', function() {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      this.classList.add('active');
+  function acceptPost(id){
+    const p=posts.find(x=>x.id===id);if(!p)return;
+    p.status='accepted';
+    addNotification(NGO accepted ${p.food} (${p.qty}) from ${p.contact});
+    renderPosts();
+    requests.unshift({id:Date.now().toString(36),food:p.food,status:'requested'});
+    renderRequests();
+  }
 
-      const id = this.getAttribute('data-tab');
-
-      document.querySelectorAll('.tab-pane').forEach(p => p.style.display = 'none');
-
-      document.getElementById(id).style.display = 'block';
+  function renderRequests(){
+    reqTableBody.innerHTML='';
+    requests.forEach(r=>{
+      const tr=document.createElement('tr');
+      tr.innerHTML=<td>${r.food}</td><td>${r.status}</td>;
+      reqTableBody.appendChild(tr);
     });
+  }
+
+  function clearExpired(){
+    addNotification('Expired posts removed');
+  }
+
+  // Chart
+  new Chart(document.getElementById('chartWastage'), {
+    type:'line',
+    data:{
+      labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct'],
+      datasets:[{label:'Food Saved (kg)',data:[10,30,60,80,120,140,180,210,250,290],fill:true,borderColor:'#0ea5a0',backgroundColor:'rgba(14,165,160,0.15)',tension:0.3}]
+    },
+    options:{scales:{y:{beginAtZero:true}},plugins:{legend:{display:false}}}
   });
-};
+
 </script>
 </body>
 </html>
-
